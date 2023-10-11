@@ -120,6 +120,7 @@ class HomeFragment : Fragment() {
                     }
 
 
+
                     Log.d("TAG", "onResponse: $response")
                 }
             },
