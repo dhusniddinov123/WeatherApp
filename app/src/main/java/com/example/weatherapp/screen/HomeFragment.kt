@@ -82,7 +82,7 @@ class HomeFragment : Fragment() {
                     val forecast = response?.getJSONObject("forecast")
                     val forecastday = forecast?.getJSONArray("forecastday")
                     for (i in 0 until forecastday!!.length()){
-                        val resObj = forecastday.getJSONObject(i)
+                        var resObj = forecastday.getJSONObject(i)
                         val day  = resObj.getJSONObject("day")
                         val condition = day.getJSONObject("condition")
 
@@ -96,7 +96,46 @@ class HomeFragment : Fragment() {
                         daylist.add(Day(n_date,text,maxtemp_c,mintemp_c,icon))
                         var manager =
                             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-                        binding.fiveday.adapter = DayAdapter(daylist)
+                        binding.fiveday.adapter = DayAdapter(daylist,object :DayAdapter.onItemClick{
+                            override fun onDayClick(position: Int) {
+
+                                resObj = forecastday!!.getJSONObject(position)
+
+                                var date_day = resObj.getString("date")
+                                var hour = resObj.getJSONArray("hour")
+                                hourlist.clear()
+                                for (i in 0 until hour.length()) {
+                                    val hour_obj = hour.getJSONObject(i)
+                                    val time_date = hour_obj.getString("time")
+                                    val time =
+                                        time_date.substring(time_date.length - 5, time_date.length)
+                                    val time_now = time_date.substring(0, 10)
+                                    val temp_hour = hour_obj.getString("temp_c")
+                                    val wind_hour = hour_obj.getString("wind_mph")
+                                    val condition_hour = hour_obj.getJSONObject("condition")
+                                    val img_hour = condition_hour.getString("icon")
+                                    val hour =
+                                        Hour(temp_hour.substring(0, 2),img_hour , wind_hour,time )
+                                    Log.d("TAG", "onDayClick: $time_now + $date_day")
+                                    if (time_now == date_day) {
+                                        hourlist.add(hour)
+
+                                        var manager =
+                                            LinearLayoutManager(
+                                                requireContext(),
+                                                LinearLayoutManager.HORIZONTAL,
+                                                false
+                                            )
+
+                                        binding.hourly.layoutManager = manager
+                                        binding.hourly.adapter = HourAdapter(hourlist)
+
+                                    }
+
+                                }
+                            }
+
+                        })
                         binding.fiveday.layoutManager = manager
 
 
