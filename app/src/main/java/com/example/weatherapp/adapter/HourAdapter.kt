@@ -38,7 +38,7 @@ class HourAdapter (var array: MutableList<Hour>, )
 
         holder.temp.text = position.temp +" °C"
         holder.img.load("http:" + position.image)
-        holder.wind.text = position.wind
+        holder.wind.text = position.wind+" km/h"
         holder.time.text = position.time
 
     }

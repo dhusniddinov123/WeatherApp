@@ -105,18 +105,20 @@ class HomeFragment : Fragment() {
                     for (i in 0 until hourarr.length()){
                         val resObj = hourarr.getJSONObject(i)
                         val time = resObj.getString("time")
+                        var n_time = time.substring(time.length-5, time.length)
                         val temp_c = resObj.getString("temp_c")
                         val wind = resObj.getString("wind_kph")
                         val condition = resObj.getJSONObject("condition")
                         val icon = condition.getString("icon")
 
-                        hourlist.add(Hour(temp_c,icon,wind,time))
+                        hourlist.add(Hour(temp_c,icon,wind,n_time))
                         var manager =
                             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
                         binding.hourly.adapter = HourAdapter(hourlist)
                         binding.hourly.layoutManager = manager
 
                     }
+
 
 
                     Log.d("TAG", "onResponse: $response")
