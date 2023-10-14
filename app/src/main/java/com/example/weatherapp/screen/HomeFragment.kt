@@ -87,11 +87,12 @@ class HomeFragment : Fragment() {
                         val condition = day.getJSONObject("condition")
 
                         val date = resObj.getString("date")
+                        val n_date = date.substring(date.length-5,date.length)
                         val text = condition.getString("text")
                         val icon = condition.getString("icon")
                         val maxtemp_c = day.getString("maxtemp_c")
                         val mintemp_c = day.getString("mintemp_c")
-                        daylist.add(Day(date,text,maxtemp_c,mintemp_c,icon))
+                        daylist.add(Day(n_date,text,maxtemp_c,mintemp_c,icon))
                         var manager =
                             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
                         binding.fiveday.adapter = DayAdapter(daylist)
