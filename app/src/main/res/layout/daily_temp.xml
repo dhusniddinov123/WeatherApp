@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_margin="5dp"
     android:padding="5dp"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:id="@+id/day">
 
     <ImageView
         android:id="@+id/state_img"

@@ -86,6 +86,7 @@ class HomeFragment : Fragment() {
                         val day  = resObj.getJSONObject("day")
                         val condition = day.getJSONObject("condition")
 
+
                         val date = resObj.getString("date")
                         val n_date = date.substring(date.length-5,date.length)
                         val text = condition.getString("text")
