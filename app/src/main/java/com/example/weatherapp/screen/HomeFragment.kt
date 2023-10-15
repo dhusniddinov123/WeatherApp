@@ -28,7 +28,7 @@ class HomeFragment : Fragment() {
     lateinit var daylist: MutableList<Day>
     lateinit var hourlist: MutableList<Hour>
 
-    val url:String = "http://api.weatherapi.com/v1/forecast.json?key=9bcfb053b7d247fda8c53154230810&q=Tashkent&days=7&aqi=yes&alerts=yes"
+    var url:String = "http://api.weatherapi.com/v1/forecast.json?key=9bcfb053b7d247fda8c53154230810&q=Tashkent&days=7&aqi=yes&alerts=yes"
 
     private var param1: String? = null
     private var param2: String? = null
@@ -57,19 +57,19 @@ class HomeFragment : Fragment() {
             object : Response.Listener<JSONObject> {
                 override fun onResponse(response: JSONObject?) {
 
-                    val location = response?.getJSONObject("location")
-                    val name = location?.getString("name")
+                    var location = response?.getJSONObject("location")
+                    var name = location?.getString("name")
                     binding.name.text = name
 
-                    val current = response?.getJSONObject("current")
-                    val last_updated = current?.getString("last_updated")
-                    val temp_c = current?.getString("temp_c")
-                    val wind_kph = current?.getString("wind_kph")
-                    val humidity = current?.getString("humidity")
+                    var current = response?.getJSONObject("current")
+                    var last_updated = current?.getString("last_updated")
+                    var temp_c = current?.getString("temp_c")
+                    var wind_kph = current?.getString("wind_kph")
+                    var humidity = current?.getString("humidity")
 
-                    val condition = current?.getJSONObject("condition")
-                    val state = condition?.getString("text")
-                    val image = condition?.getString("icon")
+                    var condition = current?.getJSONObject("condition")
+                    var state = condition?.getString("text")
+                    var image = condition?.getString("icon")
 
                     binding.day.text = "Today , "+last_updated
                     binding.temp.text = temp_c+" °C"
@@ -79,20 +79,20 @@ class HomeFragment : Fragment() {
                     binding.state.load("http:"+image)
 
 
-                    val forecast = response?.getJSONObject("forecast")
-                    val forecastday = forecast?.getJSONArray("forecastday")
+                    var forecast = response?.getJSONObject("forecast")
+                    var forecastday = forecast?.getJSONArray("forecastday")
                     for (i in 0 until forecastday!!.length()){
                         var resObj = forecastday.getJSONObject(i)
-                        val day  = resObj.getJSONObject("day")
+                        var day  = resObj.getJSONObject("day")
                         val condition = day.getJSONObject("condition")
 
 
-                        val date = resObj.getString("date")
-                        val n_date = date.substring(date.length-5,date.length)
-                        val text = condition.getString("text")
-                        val icon = condition.getString("icon")
-                        val maxtemp_c = day.getString("maxtemp_c")
-                        val mintemp_c = day.getString("mintemp_c")
+                        var date = resObj.getString("date")
+                        var n_date = date.substring(date.length-5,date.length)
+                        var text = condition.getString("text")
+                        var icon = condition.getString("icon")
+                        var maxtemp_c = day.getString("maxtemp_c")
+                        var mintemp_c = day.getString("mintemp_c")
                         daylist.add(Day(n_date,text,maxtemp_c,mintemp_c,icon))
                         var manager =
                             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
@@ -105,16 +105,16 @@ class HomeFragment : Fragment() {
                                 var hour = resObj.getJSONArray("hour")
                                 hourlist.clear()
                                 for (i in 0 until hour.length()) {
-                                    val hour_obj = hour.getJSONObject(i)
-                                    val time_date = hour_obj.getString("time")
-                                    val time =
+                                    var hour_obj = hour.getJSONObject(i)
+                                    var time_date = hour_obj.getString("time")
+                                    var time =
                                         time_date.substring(time_date.length - 5, time_date.length)
-                                    val time_now = time_date.substring(0, 10)
-                                    val temp_hour = hour_obj.getString("temp_c")
-                                    val wind_hour = hour_obj.getString("wind_mph")
-                                    val condition_hour = hour_obj.getJSONObject("condition")
-                                    val img_hour = condition_hour.getString("icon")
-                                    val hour =
+                                    var time_now = time_date.substring(0, 10)
+                                    var temp_hour = hour_obj.getString("temp_c")
+                                    var wind_hour = hour_obj.getString("wind_mph")
+                                    var condition_hour = hour_obj.getJSONObject("condition")
+                                    var img_hour = condition_hour.getString("icon")
+                                    var hour =
                                         Hour(temp_hour.substring(0, 2),img_hour , wind_hour,time )
                                     Log.d("TAG", "onDayClick: $time_now + $date_day")
                                     if (time_now == date_day) {
@@ -141,16 +141,16 @@ class HomeFragment : Fragment() {
 
 
                     }
-                    val firstday = forecastday.getJSONObject(0)
-                    val hourarr= firstday.getJSONArray("hour")
+                    var firstday = forecastday.getJSONObject(0)
+                    var hourarr= firstday.getJSONArray("hour")
                     for (i in 0 until hourarr.length()){
-                        val resObj = hourarr.getJSONObject(i)
-                        val time = resObj.getString("time")
+                        var resObj = hourarr.getJSONObject(i)
+                        var time = resObj.getString("time")
                         var n_time = time.substring(time.length-5, time.length)
-                        val temp_c = resObj.getString("temp_c")
-                        val wind = resObj.getString("wind_kph")
-                        val condition = resObj.getJSONObject("condition")
-                        val icon = condition.getString("icon")
+                        var temp_c = resObj.getString("temp_c")
+                        var wind = resObj.getString("wind_kph")
+                        var condition = resObj.getJSONObject("condition")
+                        var icon = condition.getString("icon")
 
                         hourlist.add(Hour(temp_c,icon,wind,n_time))
                         var manager =
